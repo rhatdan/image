@@ -202,12 +202,12 @@ func getAuthFilePaths(sys *types.SystemContext, homeDir string) []authPath {
 		)
 	} else {
 		paths = append(paths,
+			authPath{path: filepath.Join(homeDir, dockerLegacyHomePath), legacyFormat: true},
+		)
+		paths = append(paths,
 			authPath{path: filepath.Join(homeDir, dockerHomePath), legacyFormat: false},
 		)
 	}
-	paths = append(paths,
-		authPath{path: filepath.Join(homeDir, dockerLegacyHomePath), legacyFormat: true},
-	)
 	return paths
 }
 
