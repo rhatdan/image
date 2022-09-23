@@ -519,7 +519,10 @@ func getPathToAuthWithOS(sys *types.SystemContext, goOS string) (string, bool, e
 		return filepath.Join(homedir.Get(), nonLinuxAuthFilePath), false, nil
 	}
 
-	runtimeDir := os.Getenv("XDG_RUNTIME_DIR")
+	runtimeDir, err := homedir.GetRuntimeDir()
+	if err != nil {
+		return "", false, err
+	}
 	if runtimeDir != "" {
 		// This function does not in general need to separately check that the returned path exists; that’s racy, and callers will fail accessing the file anyway.
 		// We are checking for os.IsNotExist here only to give the user better guidance what to do in this special case.
